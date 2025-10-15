@@ -1,0 +1,153 @@
+--String functions--
+---lower---Converts the Character into lower case
+select lower('IBRIDGE360') from dual
+select lower(emp_name) from emps
+---upper---Converts the Character into upper case
+select upper('ibriDGE360') from dual
+select upper(emp_name) from emps
+
+--lenght--counts the number of charcters--
+select emp_name,length(emp_name) from emps
+
+--ltrim ---Remove unwanted spaces from left side
+select ltrim('       ibridge') from dual
+
+--rtrim ---Remove unwanted spaces from right side
+select rtrim('ibridge       ') from dual
+  
+
+--substr--it gives part of the string--syntax(string,start,how many characters you need to read)
+select substr('IBRIDGE360',8,3) from dual
+select substr('IBRIDGE360',1,7) from dual
+
+--instr--checks the position of a charater
+select instr('IBRIDGE360','B') from dual
+select instr('IBIRIDGE360','I') from dual
+select instr('IBIRIDGE360','I',instr('IBRIDGE360','I')+1) from dual
+select instr('IBIRIDGE360','I',4) from dual
+
+select * from actor
+select substr(email,1,instr(email,'@')-1) from actor
+select substr(email,instr(email,'@')+1,length(email)) from actor
+--lpad --Function takes a text value and pas it to left side by adding extra character based required length
+select lpad('IBRIDGE',13,'*') from dual
+
+--rpad --Function takes a text value and pas it to left side by adding extra character based required length
+select rpad('IBRIDGE',13,'?') from dual
+
+
+---Number Functions---
+select abs(-12) from dual
+
+power --It gives you the power of value
+select power(2,3) from dual
+
+
+sqrt --It gives square root of given value
+select sqrt(25) from dual
+
+mod --Remainder from division
+select mod(5,2) from dual
+
+
+floor --ROunded up any +ve or -ve decimal value down to the next integer
+select floor(4.7) from dual
+
+ceil--Next integer
+select ceil(4.3) from dual
+
+
+round -- rounded decimal points based on the decimal point need to show
+select round(5.3) from dual
+select round(5.6) from dual
+select round(5.3567,2) from dual
+
+
+
+----------------------------------------
+
+--Date functions---
+sysdate --GIves the system date
+select sysdate from dual
+select current_date from dual
+select current_timestamp from dual
+
+
+add_months --it adds number of months for a date
+select add_months(sysdate,2) from dual
+select add_months(sysdate,-2) from dual
+
+months_between -- tells the months difference between 2 dates
+select months_between(sysdate,'17-11-2025') from dual
+
+last_day --tells you the last date of this current month
+select last_day(sysdate) from dual
+
+
+next_day --it tells you the day date of next day
+select next_day(sysdate,'tue') from dual
+
+
+trunc --Gives you first day of the year
+select trunc(sysdate) from dual
+select trunc(sysdate,'month') from dual
+select trunc(sysdate,'YEAR') from dual
+
+to_char --FUnction which converts the date format based on the required condition basically it converts date to string
+select sysdate from dual
+select to_char(current_timestamp,'dd/mm/yy hh:mm:ss') from dual
+select to_char(sysdate,'dd-mm-yyyy') from dual
+select to_char(sysdate,'dd-mon-yyyy') from dual
+select to_char(sysdate,'dd-month-yyyy') from dual
+select to_char(sysdate,'day-mon-yyyy') from dual
+select to_char(sysdate,'dy') from dual
+select to_char(sysdate,'q') from dual
+select to_char(sysdate,'w') from dual
+select to_char(sysdate,'yyyy')-2 from dual
+
+
+--display employees who hired in the 4 years back--
+select * from emps
+
+select *
+from emps
+where to_char(emp_doj,'yyyy') = to_char(sysdate,'yyyy')-4
+
+
+--display who born on  previous 2 month--
+select *
+from emps
+where to_char(emp_dob,'mm') = to_char(sysdate,'mm')-2 
+
+
+
+
+--Display employee who hired in this 4 years back on  nov month ---
+select *
+from emps
+where to_char(emp_doj,'yyyy') = to_char(sysdate,'yyyy')-4 and to_char(emp_doj,'mon') ='nov'
+
+
+--display employee who hired in this 1st week of this month---
+select *
+from emps
+where to_char(emp_doj,'w-mm-yyyy') = to_char(sysdate,'w-mm-yyyy')
+
+select *
+from emps
+where to_char(emp_doj,'mm-yyyy') = to_char(sysdate,'mm-yyyy') and to_char(emp_doj,'w') = 1
+
+
+
+
+
+insert into emps values (5,'Dummy','10-06-23',10,12234,'M',null,null,51,'05-06-25');
+insert into emps values (6,'Dummy','10-06-23',10,12234,'M',null,null,51,sysdate);
+commit
+---To date function -- which converts string to date--
+select to_date('31-02-2024') from dual
+select to_date('31-13-2024') from dual
+select to_date('12-03-2024') from dual
+
+
+
