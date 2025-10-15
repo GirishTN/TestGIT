@@ -1,0 +1,65 @@
+create table team_37(team_id number(3) primary key,team_member_name varchar(6));
+
+insert into team_37 values(1,'Ram');
+insert into team_37 values(2,'Bhavya');
+comit;
+select * from team_37
+drop table team_37
+select team_member_name,length(team_member_name) from team_37
+
+
+1. Display Emp_name, Age of employee consider folks who were born only in the month of MAY
+
+select emp_name,
+floor(months_between(sysdate, emp_dob) / 12)
+as Age from employee 
+where extract(MONTH from Emp_dob) = 5;
+
+2. Display emp_name, gender, date of birth , month they were born, year they were born, day they were born
+
+select emp_name,gender,emp_dob,
+extract(month from emp_dob) as birth_month,
+extract(year from emp_dob) as birth_year,
+extract(day from emp_dob) as birth_day 
+from employee;
+
+3. Display the employee name, date of birth, salary for those employees who are working in dept 10 or dept 20 and whose job id is 50 or job id is 51
+
+select emp_name,emp_dob,emp_sal from employee E
+inner join dept D ON E.dept_id = D.dept_id 
+inner join jobs J ON E.job_id = J.job_id 
+where E.dept_id = 10 or E.dept_id = 20 
+AND E.job_id = 50 or E.job_id = 51;
+
+4. Display the employee name, dept_id, emp_sal for all the employees whos job_id = 51 and getting salary more than 45000
+
+select emp_name,dept_id,emp_sal from employee 
+where job_id = 51 
+AND emp_sal > 45000;
+
+5. Find the employee name who is getting the maximum salary
+
+select emp_name from employee 
+where emp_sal = (select max(emp_sal) from employee);
+
+6. Find the employee names whose salary is greater than 30000 and salary is less than 60000 and employee name starts with letter S
+
+select emp_name from employee 
+where emp_sal between 30000 and 60000 
+AND emp_name like 'S%' or emp_name like 's%';
+
+7. Find the number of employees we have whose salary is greater than 35000
+
+select count(emp_name) from employee 
+where emp_sal > 35000;
+
+8. List the employees who is working in dept_id 10
+
+select emp_name from employee 
+where dept_id = 10;
+
+9. List the employees whose salary is greater than the salary of employee TIM
+
+select emp_name from employee 
+where emp_sal > (select emp_sal from employee 
+where emp_name = 'tim');
